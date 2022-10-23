@@ -1,0 +1,85 @@
+#!bin/bash
+
+#Definición de Colores 
+
+negro="\e[1;30m"
+azul="\e[1;34m"
+verde="\e[1;32m"
+cian="\e[1;36m"
+rojo="\e[1;31m"
+purpura="\e[1;35m"
+amarillo="\e[1;33m"
+blanco="\e[1;37m"
+
+#BANNER
+
+BannerIp(){
+	sleep 0.5
+	clear
+echo -e "
+ ▄▄▄ ▄▄▄▄▄▄▄    ▄▄▄ ▄▄    ▄ ▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄    
+█   █       █  █   █  █  █ █       █       █   
+█   █    ▄  █  █   █   █▄█ █    ▄▄▄█   ▄   █   
+█   █   █▄█ █  █   █       █   █▄▄▄█  █ █  █   
+█   █    ▄▄▄█  █   █  ▄    █    ▄▄▄█  █▄█  █   
+█   █   █      █   █ █ █   █   █   █       █   
+█▄▄▄█▄▄▄█      █▄▄▄█▄█  █▄▄█▄▄▄█   █▄▄▄▄▄▄▄█   
+
+" | lolcat
+}
+
+TuIp(){
+	curl -s http://ip-api.com/
+	echo ""
+	sleep 3
+echo -e -n "${rojo}
+${rojo}[${blanco}  ${rojo}]${rojo} ➢${blanco} Presione ENTER para continuar${rojo} 
+${rojo}[${blanco} ➢ ${rojo}]${rojo} ➢" ${blanco}
+read $ENTER
+bash IpInfo
+}
+
+
+IpAtack(){
+	BannerIp
+	echo ""
+echo -e -n "${rojo}
+${rojo}[${blanco} IP INFO ${rojo}]${rojo} ➢${blanco} Escribe una ip${rojo} 
+${rojo}[${blanco} Dirección IP${rojo}]${rojo} ➢" ${blanco}
+read -r Ip
+curl -s http://ip-api.com/$Ip
+sleep 3
+echo -e -n "${rojo}
+${rojo}[${blanco}¿Continuar?${rojo}]${rojo} ➢${blanco} Presione ENTER para continuar${rojo} 
+${rojo}[${blanco} Tu Respuesta ${rojo}]${rojo} ➢" ${blanco}
+read $ENTER
+bash IpInfo
+}
+
+
+Menu(){
+	sleep 0.5
+	BannerIp
+echo -e "${rojo}[${blanco} 01 ${rojo}]${rojo} ➢ ${blanco}Información mi IP Publica${rojo}"
+echo -e "${rojo}[${blanco} 02 ${rojo}]${rojo} ➢ ${blanco}Extraer Información de una IP.${rojo}"
+echo -e "${rojo}[${blanco} 03 ${rojo}]${rojo} ➢ ${blanco}Salir${rojo}"
+read -r OPTION
+
+if [[ "${OPTION}" == "1" || "${OPTION}" == "01" ]]; then
+	TuIp
+elif [[ "${OPTION}" == "2" || "${OPTION}" == "02" ]]; then
+	IpAtack
+elif [[ "${OPTION}" == "3" || "${OPTION}" == "03" ]]; then
+		clear
+figlet Adios.. | lolcat
+echo -e "${verde} Gracias por usar mi Script"
+          sleep 3
+          exit
+else
+echo -e "${rojo}
+OPCIÓN INCORRECTA" 
+	sleep 2
+	Menu
+fi
+}
+Menu
